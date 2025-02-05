@@ -3,6 +3,8 @@ import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import bookLogo from "./assets/books.png";
 import Books from "./components/Books";
 import SingleBook from "./components/SingleBook";
+import Account from "./components/Account";
+import Register from "./components/Register"
 
 function App() {
   return (
@@ -32,8 +34,14 @@ function App() {
       </div>
       <div>
         <Routes>
-          <Route path="/" element={<Books />} />
+          <Route path="/" element={
+            <>
+            <Register />
+            <Books />
+            </>
+            } />
           <Route path="/:id" element={<SingleBook />} />
+          <Route path="/:id" element={<Account />} />
         </Routes>
       </div>
     </>

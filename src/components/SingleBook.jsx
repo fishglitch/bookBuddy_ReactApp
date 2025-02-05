@@ -51,7 +51,7 @@ const SingleBook = () => {
       }
 
       //update state with new book availability
-      updateBookAvailability(data);
+      setSingleBook(data);
 
     } catch (error) {
       console.error("Can't update book availability", error);
