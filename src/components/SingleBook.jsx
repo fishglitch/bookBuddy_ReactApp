@@ -2,8 +2,7 @@
  * that renders details for a single book.
  * Fetch the book data from the provided API.
  * You may consider conditionally rendering a 'Checkout'
- * button for logged in users.
- * */
+ * button for logged in users.*/
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
@@ -36,6 +35,34 @@ const SingleBook = () => {
     getSingleBook();
   }, []); // Empty dependency array means this runs once when the component mounts
 
+  const updateBookAvailability = async (available) => {
+    try {
+      const response = await fetch(`${API_URL}/books/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${TOKEN_STRING}`,
+        },
+        body: JSON.stringify({available}),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error (data.error || "Failed to update book availability");
+      }
+
+      //update state with new book availability
+      updateBookAvailability(data);
+
+    } catch (error) {
+      console.error("Can't update book availability", error);
+      setError(error);
+    }
+  };
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <div className="single-book-container">
       {singleBook ? (
@@ -47,6 +74,12 @@ const SingleBook = () => {
             <p><strong>Description:</strong> {singleBook.description}</p>
             <p><strong>Status:</strong> {singleBook.available ? "Available" : "Checked out"}</p>
             <button onClick={() => navigate("/")}>Back</button>
+            <button
+            onClick={() => updateBookAvailability(!singleBook.available)}
+            > 
+            {singleBook.available ? "Checkout" : "Return"}
+
+            </button>
           </div>
         </>
       ) : (
