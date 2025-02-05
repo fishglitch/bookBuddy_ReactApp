@@ -45,9 +45,11 @@ const Books = () => {
   return (
     <div>
       <ul>
-        {availableBooks.map((book, index) => (
-          <li key={index} onClick={() => {navigate(`/${book.id}`)} }>
-            {book.title}
+        {availableBooks.map((book) => (
+          <li key={book.id} onClick={() => {navigate(`/${book.id}`)} }>
+            {book.coverimage && (
+              <img src={book.coverimage} alt={`${book.title}cover`}/>
+            )}
           </li>
         ))}
       </ul>
