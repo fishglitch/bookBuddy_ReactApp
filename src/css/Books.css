@@ -1,0 +1,40 @@
+/* Books.css */
+
+.books-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive grid layout */
+    gap: 16px; /* Space between grid items */
+    padding: 16px; /* Padding around the container */
+  }
+  
+  .books-item {
+    background-color: #f9f9f9; /* Light background for the book item */
+    border: 1px solid #ccc; /* Border around each book item */
+    border-radius: 4px; /* Slightly rounded corners */
+    text-align: center; /* Center align contents */
+    cursor: pointer; /* Cursor indicating clickable item */
+    transition: transform 0.2s; /* Smooth scaling effect */
+    padding: 10px; /* Padding for content inside */
+  }
+  
+  .books-item:hover {
+    transform: scale(1.05); /* Slightly larger on hover */
+  }
+  
+  .books-item img {
+    max-width: 100%; /* Responsive image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 4px 4px 0 0; /* Rounded corners for the top of the item */
+  }
+  
+  .book-title {
+    display: block; /* Make title block-level */
+    font-weight: bold; /* Make title bold */
+    margin-top: 10px; /* Space above the title */
+  }
+  
+  .book-author {
+    display: block; /* Make author block-level */
+    color: #555; /* Dark gray color for the author */
+    margin-top: 5px; /* Space above the author */
+  }

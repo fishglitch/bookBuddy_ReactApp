@@ -7,6 +7,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
+import '../css/SingleBook.css'; 
 
 const API_URL = `https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/`;
 
@@ -36,15 +37,22 @@ const SingleBook = () => {
   }, []); // Empty dependency array means this runs once when the component mounts
 
   return (
-    <>
-      {singleBook && (
-        <section>
-          <h3>{singleBook?.title}</h3>
-          <img src={singleBook?.coverimage} alt={singleBook?.title} />
-          <button onClick={() => navigate("/")}>Back</button>
-        </section>
+    <div className="single-book-container">
+      {singleBook ? (
+        <>
+          <img src={singleBook.coverimage} alt={singleBook.title} />
+          <div className="book-details">
+            <h3>{singleBook.title}</h3>
+            <p><strong>Author:</strong> {singleBook.author}</p>
+            <p><strong>Description:</strong> {singleBook.description}</p>
+            <p><strong>Status:</strong> {singleBook.available ? "Available" : "Checked out"}</p>
+            <button onClick={() => navigate("/")}>Back</button>
+          </div>
+        </>
+      ) : (
+        <p>Loading...</p>
       )}
-    </>
+    </div>
   );
 };
 export default SingleBook;

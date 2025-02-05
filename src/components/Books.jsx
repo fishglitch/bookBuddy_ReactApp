@@ -5,7 +5,8 @@ Users should be able to click on an individual book to
 navigate to the SingleBook component and view its details. */
 
 import React, { useEffect, useState } from "react";
-import { useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
+import "../css/Books.css";
 // import { Routes, Route, Link, useNavigate } from "react-router-dom";
 
 // const cohortName ="2409-GHP-ET-WEB-PT";
@@ -43,18 +44,23 @@ const Books = () => {
   }
 
   return (
-    <div>
-      <ul>
-        {availableBooks.map((book) => (
-          <li key={book.id} onClick={() => {navigate(`/${book.id}`)} }>
-            {book.coverimage && (
-              <img src={book.coverimage} alt={`${book.title}cover`}/>
-            )}
-          </li>
-        ))}
-      </ul>
+    <div className="books-container">
+      {availableBooks.map((book) => (
+        <div
+          key={book.id} 
+          className="books-item" 
+          onClick={() => {navigate(`/${book.id}`)}}
+          >
+          {book.coverimage && (
+            <img src={book.coverimage} alt={`${book.title}cover`} />
+          )}
+           <span className="book-title">{book.title}</span>
+           <span className="book-author">{book.author}</span> 
+        </div>
+      ))}
     </div>
   );
 };
 
 export default Books;
+
