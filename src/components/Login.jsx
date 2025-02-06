@@ -15,7 +15,7 @@ const Login = ({setToken}) => {
         event.preventDefault();
 
         try {
-            const response = await fetch(`${API_URL}/users/login`, {
+            const APIresponse = await fetch(`${API_URL}/users/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -23,19 +23,19 @@ const Login = ({setToken}) => {
                 body: JSON.stringify({email, password}),
             });
 
-            const result = await response.json();
+            const result = await APIresponse.json();
 
-            if(!response.ok) {
+            if(!APIresponse.ok) {
                 throw new Error (result.message || "Login failed");
             }
+            // save token to local storage
+            localStorage.setItem("token", result.token);
 
             // if login is successful, set the token
             setToken(result.token);
             console.log("Login success:", result.message);
 
-            // check
-            localStorage.setItem("token", result.token);
-            navigate("/");
+            navigate("/account");
         } catch (error) {
             setError(error.message);
         }

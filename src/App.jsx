@@ -47,8 +47,8 @@ function App() {
         <Navigations />
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login token={token} setToken={setToken}/>} />
-          <Route path="/register" element={<Register token={token} setToken={setToken}/>} />
+          <Route path="/login" element={<Login setToken={setToken}/>} />
+          <Route path="/register" element={<Register setToken={setToken}/>} />
           <Route path="/:id" element={<SingleBook />} />
           <Route path="/account" element={<Account />} />
         </Routes>
@@ -57,3 +57,7 @@ function App() {
 }
 
 export default App;
+
+// was previously 
+{/* <Route path="/login" element={<Login token={token} setToken={setToken}/>} />
+<Route path="/register" element={<Register token={token} setToken={setToken}/>} /> */}

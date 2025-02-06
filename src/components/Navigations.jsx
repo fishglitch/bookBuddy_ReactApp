@@ -9,6 +9,7 @@ const Navigation = () => {
         <Link to="/">Home</Link>
         <Link to="/register">Register for an Account</Link>
         <Link to="/login">Login</Link>
+        <Link to="/account">Account</Link>
       </div>
     </nav>
   );
