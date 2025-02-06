@@ -1,50 +1,55 @@
 /* TODO - add your code to create a functional React component 
 that renders a registration form */
 
+// frog@frog.com pw: frog
+
 import { useState } from "react";
 
 const API_URL = `https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/`;
 
-export default function SignUpForm({ setToken }) {
+const Register = ({ setToken }) => {
+
+  // this is the body from POST api/users/register
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] =useState("");
- 
-  // const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+
   const [error, setError] = useState(null);
 
-  async function handleSubmit(event) {
+  async function handleRegistration(event) {
     event.preventDefault();
-    console.log("async");
+    console.log(firstName);
 
     try {
-      const response = await fetch(`${API_URL}/users/register`,
+      const APIresponse = await fetch(`${API_URL}/users/register`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            firstName,
-            lastName,
+            firstName: firstName,
+            lastName: lastName,
             email,
-            password,// these values show up on console.log(result);
+            password,// need to review this portion
           }),
         });
 
-      // console.log(username, password)
-      const result = await response.json();
+      const result = await APIresponse.json();
+      console.log("API Response", APIresponse);
+      console.log("parsed result", result);
 
-      if (!response.ok) {
+      if (!APIresponse.ok) {
         throw new Error(result.message || "registration failed");
       }
-      console.log("login", result); // shows inputted username and pw
+
+      // if successful, set token and redirect
       setToken(result.token);
 
-      // Authenticate Component Tab step 5:
-      // "use this function in our handleSubmit. Pass the token property of our API response to setToken."
-
+      localStorage.setItem("token", result.token);
+      console.log("Registration successful:", result.message);
+      
       
     } catch (error) {
       setError(error.message);
@@ -54,25 +59,45 @@ export default function SignUpForm({ setToken }) {
     <>
       <div className="registration-form">
         <h2>Sign Up!</h2>
-        <form onSubmit={handleSubmit} >
-          <div className="form-field-firstname">
+        <form onSubmit={handleRegistration} >
+          <div>
             <label>
               First Name:
               <input
               type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
-                required
               />
             </label>
           </div>
-          <div className="form-field-lastname">
+          <div>
             <label>
               Last name:
               <input
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Email:
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Password:
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </label>
@@ -86,3 +111,4 @@ export default function SignUpForm({ setToken }) {
     // react fragment, an invisible div (parent)
   );
 }
+export default Register

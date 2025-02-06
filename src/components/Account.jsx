@@ -5,7 +5,7 @@ conditionally rendering a message for other users that
 prompts them to log in or create an account.  */
 
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "../css/Account.css";
 
 const API_URL = `https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/`;
@@ -13,15 +13,22 @@ const API_URL = `https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/`;
 const Account = () => {
   const [userLogin, setUserLogin] = useState(null);
   const [error, setError] = useState(null);
-
-  const { id } = useParams();
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUserLogin = async () => {
+
+
       try {
-        const APIresponse = await fetch(`${API_URL}/user/register`);
+        const APIresponse = await fetch(`${API_URL}/users/me`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }
+        });
         const json = await APIresponse.json();
+
         if (!APIresponse.ok) {
           throw new Error(json.error || "cannot fetch logged in user!!");
         }
@@ -40,12 +47,9 @@ const Account = () => {
       {" "}
       <div className="account-container">
         <h2>Account Details</h2>
-        <p>
-          <strong>Name:</strong> {userLogin.name}
-        </p>
-        <p>
-          <strong>Email:</strong> {userLogin.email}
-        </p>
+        <p><strong>First Name:</strong> {userLogin.firstname}</p>
+        <p><strong>Last Name:</strong> {userLogin.lastname}</p>
+        <p><strong>Email:</strong> {userLogin.email}</p>
       </div>
     </>
   );

@@ -1,5 +1,16 @@
-/** TODO - add your code to create a functional React component 
-that renders a navigation bar for the different views in your 
-single page application. You may consider conditionally rendering 
-some options - for example 'Login' should be available if someone 
-has not logged in yet. */
+import { Link } from "react-router-dom";
+import Navigations from '../css/Navigations.css'
+
+const Navigation = () => {
+  return (
+    <nav className="navigation"> {/* Apply the navigation class */}
+      <h1>Navigation</h1>
+      <div>
+        <Link to="/">Home</Link>
+        <Link to="/register">Register for an Account</Link>
+        <Link to="/login">Login</Link>
+      </div>
+    </nav>
+  );
+}
+export default Navigation;

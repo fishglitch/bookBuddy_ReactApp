@@ -1,18 +1,30 @@
-import React, { useEffect, useState } from "react";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Change Router to BrowserRouter
 import bookLogo from "./assets/books.png";
+import Navigations from "./components/Navigations";
+import Login from "./components/Login";
 import Books from "./components/Books";
+import Register from "./components/Register";
 import SingleBook from "./components/SingleBook";
 import Account from "./components/Account";
-import Register from "./components/Register"
+
+function HomePage () {
+  return (
+    <div>
+      <Books/>
+    </div>
+  )
+}
 
 function App() {
+
+  const [token, setToken] =useState(null);
+
   return (
-    <>
       <div>
         <h1>Books</h1>
         <h1>
-          <img id="logo-image" src={bookLogo} />
+          <img id="logo-image" src={bookLogo} alt="Book Logo" />
           Library App
         </h1>
 
@@ -31,20 +43,17 @@ function App() {
           Don't forget to set up React Router to navigate between the different
           views of your single page application!
         </p>
-      </div>
-      <div>
+
+        <Navigations />
         <Routes>
-          <Route path="/" element={
-            <>
-            <Register />
-            <Books />
-            </>
-            } />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login token={token} setToken={setToken}/>} />
+          <Route path="/register" element={<Register token={token} setToken={setToken}/>} />
           <Route path="/:id" element={<SingleBook />} />
-          <Route path="/:id" element={<Account />} />
+          <Route path="/account" element={<Account />} />
         </Routes>
       </div>
-    </>
   );
 }
+
 export default App;
