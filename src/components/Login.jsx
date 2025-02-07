@@ -1,11 +1,11 @@
-/* TODO - add your code to create a functional React component 
-that renders a login form */
+// frog@frog.com pw: frog
+// ant ant ant@ant.ant pw: ant
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from '../api'; // Import login API function
 
-const API_URL = `https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/`;
-
-const Login = ({token, setToken, setUser}) => {
+const Login = ({ token, setToken, setUser }) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -15,45 +15,34 @@ const Login = ({token, setToken, setUser}) => {
         event.preventDefault();
 
         try {
-            const APIresponse = await fetch(`${API_URL}/users/login`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({email, password}),
-            });
-
-            const result = await APIresponse.json();
-
-            if(!APIresponse.ok) {
-                throw new Error (result.message || "Login failed");
-            }
-            // save token to local storage
+            const result = await loginUser(email, password); // Use API function
+            // Save token to local storage
             localStorage.setItem("token", result.token);
 
-            // if login is successful, set the token
+            // If login is successful, set the token and user
             setToken(result.token);
-            // console.log("Login success:", result.message);
+
+            // Option: fetch user details if needed (use fetchUserDetails here if so)
+            // setUser(userDetails); // can define userDetails after fetching
 
             navigate("/account");
         } catch (error) {
             setError(error.message);
         }
     };
+
     return (
-        <>
         <div>
             <h2>Login</h2>
-            <form onSubmit={handleLogin} >
-
+            <form onSubmit={handleLogin}>
                 <div>
                     <label>
                         Email:
                         <input 
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        required
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
                         />
                     </label>
                 </div>
@@ -61,18 +50,18 @@ const Login = ({token, setToken, setUser}) => {
                     <label>
                         Password:
                         <input 
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
                         />
                     </label>
                 </div>
                 <button type="submit">Login</button>
+                {error && <p style={{ color: "red" }}>{error}</p>} {/* Display error */}
             </form>
         </div>
-        
-        </>
-    )
-}
+    );
+};
+
 export default Login;

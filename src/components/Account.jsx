@@ -1,67 +1,56 @@
-/** TODO - add your code to create a functional React component 
-that renders account details for a logged in user. Fetch the 
-account data from the provided API. You may consider 
-conditionally rendering a message for other users that 
-prompts them to log in or create an account.  */
-
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import "../css/Account.css";
+import { fetchUserDetails, deleteReservation } from "../api"; // Import fetch user details and update function
 
-const API_URL = `https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/`;
 
 const Account = () => {
   const [userLogin, setUserLogin] = useState(null);
-  const [books, setBooks] = useState([]); // this array stores checked out books for a logged in user
+  // const [books, setBooks] = useState([]); 
+  const [reservations, setReservations] = useState([]); 
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUserLogin = async () => {
-      const token = localStorage.getItem("token"); // added this in relation to const [books,setBooks]
-
+      const token = localStorage.getItem("token");
       if (!token) {
-        // if there is no token, redirect to login
-        navigate("/login");
+        navigate("/login"); // Redirect if no token
         return;
       }
 
       try {
-        const APIresponse = await fetch(`${API_URL}/users/me`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`, // incl. token in header
-          },
-        });
-        const json = await APIresponse.json();
-
-        if (!APIresponse.ok) {
-          throw new Error(json.error || "cannot fetch logged in user!!");
-        }
-        // console.log("fetched user login info:", json);
-        setUserLogin(json);
-        setBooks(json.books || []);
+        const userDetails = await fetchUserDetails(token);
+        setUserLogin(userDetails);
+        setReservations(userDetails.books || []);
+        console.log("Checked-out books:", userDetails.books);
       } catch (error) {
-        console.error("can't fetch logged in user!", error);
+        console.error("Can't fetch logged in user!", error);
         setError(error);
+        navigate("/login"); // Optionally redirect on error (e.g., token expired)
+      } finally {
+        setLoading(false);
       }
     };
     getUserLogin();
-  }, [navigate]); // understand why nav is in dependency array
+  }, [navigate]);
+
+  if (loading) {
+    return <div>Loading...</div>; // Display loading
+  }
 
   if (error) {
     return (
       <div>
         <h2>Error fetching account details</h2>
-        <p>{error}</p>
+        <p>{error.message}</p>
         <Link to="/login">Login</Link>
       </div>
     );
   }
 
-  if(!userLogin) {
-    return (
+  if (!userLogin) {
+   return (
       <div>
         <h2>Login required to access your account details</h2>
         <Link to="/login">Login</Link>
@@ -70,27 +59,50 @@ const Account = () => {
     );
   }
 
-  return (
-    <>
-      <div className="account-container">
-        <h2>Account Details</h2>
-        <p><strong>First Name:</strong> {userLogin.firstname}</p>
-        <p><strong>Last Name:</strong> {userLogin.lastname}</p>
-        <p><strong>Email:</strong> {userLogin.email}</p>
-        <h3>Checked Out Books</h3>
-        {books.length > 0 ? (
-          <ul>
-            {books.map((book) => (
-          <li key={book.id}>
-          <strong>{book.title}</strong> by {book.author}
-        </li>
-            ))}
-          </ul>
-        ) : ( <p>No books checked out</p>
+  const handleReturnBook = async (reservationId) => {
+    const token = localStorage.getItem("token");
+    if (!token) return; // If no token, do not proceed
+    console.log("Currently checked out books:", reservations ); 
+    console.log(`Attempting to return book with ID: ${reservationId}`);
+    try {
+      const result = await deleteReservation(reservationId, token);
+      // Update local state to reflect change
+      setReservations((prevResevations) => 
+        prevResevations.filter((reservation) => reservation.id !== reservationId) // Remove returned book from list
+      );
+      console.log(`Successfully returned the book with ID: ${reservationId}`);
+    } catch (error) {
+      console.error("Can't return the book!", error);
+      setError(error);
+    }
+  };
 
-        )}
-      </div>
-    </>
+  return (
+    <div className="account-container">
+      <h2>Account Details</h2>
+      <p><strong>First Name:</strong> {userLogin.firstname}</p>
+      <p><strong>Last Name:</strong> {userLogin.lastname}</p>
+      <p><strong>Email:</strong> {userLogin.email}</p>
+      <h3>Checked Out Reservations</h3>
+      {reservations.length > 0 ? (
+        <div className="reservations-list">
+          {reservations.map((book) => ( // review array method you should know what scenario to use and structure
+            <div key={book.id}>
+              {book.coverimage && (
+                <img src={book.coverimage} alt={`${book.title} cover`} />
+              )}
+              <div>
+                <h4>{book.title}</h4>
+                <p>by {book.author}</p>
+                <button onClick={() => handleReturnBook(book.id)}>Return</button> {/* Button to return the book */}
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p>No books checked out</p>
+      )}
+    </div>
   );
 };
 
