@@ -36,7 +36,6 @@ const Navigation = ({ token, setToken }) => {
     <nav className="navigation">
       <div>
         <Link to="/">Home</Link>
-        <Link to="/register">Register for an Account</Link>
 
         {/* Ternary operator below means: 
         "If there is a token (indicating the user is logged in), 
@@ -48,7 +47,10 @@ const Navigation = ({ token, setToken }) => {
             <button onClick={handleLogout}>Logout: [{userLogin?.email}]</button>
           </>
         ) : (
-          <Link to="/login">Login</Link>
+          <>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register for an Account</Link>
+          </>
         )}
       </div>
     </nav>

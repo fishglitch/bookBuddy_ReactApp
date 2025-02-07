@@ -9,6 +9,7 @@ const SingleBook = () => {
 
   const [singleBook, setSingleBook] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getSingleBook = async () => {
@@ -18,6 +19,8 @@ const SingleBook = () => {
       } catch (error) {
         console.error("Can't show single book", error);
         setError(error);
+      } finally {
+        setLoading(false); // set to this state after fetch
       }
     };
     getSingleBook();
@@ -25,18 +28,36 @@ const SingleBook = () => {
 
   const handleAvailabilityUpdate = async (available) => {
     const token = localStorage.getItem("token");
+    const userId = JSON.parse(localStorage.getItem("user"))?.id; // retrieve user id to check book reservations
     try {
-      const updatedBook = await updateBookAvailability(id, available, token); // Use new API function
+      // check if the book is already checked out by the logged in user 
+      if (!available && singleBook.checkedOutBy !==userId) {
+        alert("Sorry, cannot be checked out because this book is currently checked out by another user.");
+        return;
+      }
+      const updatedBook = await updateBookAvailability(id, available, token); // Call API function to update book availability
       setSingleBook(updatedBook);
+
+      if (available) {
+        navigate("/account"); // go to Account if checked out book
+      } else {
+        alert("Book returned, thanks!");
+      }
     } catch (error) {
       console.error("Can't update book availability", error);
       setError(error);
     }
   };
 
+  if (loading) {
+    return <p>loading... </p>;
+  }
+
   if (error) {
     return <div>Error: {error.message}</div>;
   }
+
+  const token = localStorage.getItem("token");
 
   return (
     <div className="single-book-container">
@@ -49,10 +70,17 @@ const SingleBook = () => {
             <p><strong>Description:</strong> {singleBook.description}</p>
             <p><strong>Status:</strong> {singleBook.available ? "Available" : "Checked out"}</p>
             <button onClick={() => navigate("/")}>Back</button>
+            {token ? (
             <button
-              onClick={() => handleAvailabilityUpdate(!singleBook.available)}>
-              {singleBook.available ? "Checkout" : "Return"}
-            </button>
+            onClick={() => handleAvailabilityUpdate(!singleBook.available)}>
+            {singleBook.available ? "Checkout" : "Return"}
+          </button>
+            ) : (
+              <button onClick={() => navigate("/login")}>
+                Login required to {singleBook.available ? "Checkout" : "Return"}
+              </button>
+            )}
+
           </div>
         </>
       ) : (

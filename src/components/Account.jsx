@@ -22,7 +22,7 @@ const Account = () => {
         const userDetails = await fetchUserDetails(token);
         setUserLogin(userDetails);
         setReservations(userDetails.books || []);
-        console.log("Checked-out books:", userDetails.books);
+        console.log("Books you've checked out:", userDetails.books);
       } catch (error) {
         console.error("Can't fetch logged in user!", error);
         setError(error);
@@ -69,7 +69,7 @@ const Account = () => {
       setReservations((prevResevations) => 
         prevResevations.filter((reservation) => reservation.id !== reservationId) // Remove returned book from list
       );
-      console.log(`Successfully returned the book with ID: ${reservationId}`);
+      console.log(`Success! Book with ID: ${reservationId} has been returned!`);
     } catch (error) {
       console.error("Can't return the book!", error);
       setError(error);
