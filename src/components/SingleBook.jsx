@@ -71,10 +71,18 @@ const SingleBook = () => {
             <p><strong>Status:</strong> {singleBook.available ? "Available" : "Checked out"}</p>
             <button onClick={() => navigate("/")}>Back</button>
             {token ? (
-            <button
-            onClick={() => handleAvailabilityUpdate(!singleBook.available)}>
-            {singleBook.available ? "Checkout" : "Return"}
+              singleBook.available ? (
+                // if book is available, can be checked out
+                <button
+                onClick={() => handleAvailabilityUpdate(true)}>
+                Checkout
+              </button>
+              ) : (
+                // display message if book is already checked out by another user 
+            <button onClick={() => navigate("/")}>
+           Checked Out, Sorry!
           </button>
+              )
             ) : (
               <button onClick={() => navigate("/login")}>
                 Login required to {singleBook.available ? "Checkout" : "Return"}

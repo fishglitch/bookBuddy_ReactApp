@@ -49,7 +49,7 @@ const Navigation = ({ token, setToken }) => {
         ) : (
           <>
             <Link to="/login">Login</Link>
-            <Link to="/register">Register for an Account</Link>
+            <Link to="/register">Create an Account</Link>
           </>
         )}
       </div>
