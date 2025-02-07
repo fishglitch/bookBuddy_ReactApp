@@ -4,15 +4,18 @@ import { fetchAllBooks } from "../api"; // Import fetch all books API function
 import "../css/Books.css";
 
 const Books = () => {
+  // moved to Navigations component
+  // const [searchTerm, setSearchTerm] = useState("");
+
   const [availableBooks, setAvailableBooks] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSearchChange = (event) => { 
-    setSearchTerm(event.target.value);
-  };
+  // const handleSearchChange = (event) => {
+  //   setSearchTerm(event.target.value);
+  // };
 
+  // moved these functionalities to Navigations component
   // fetch all books from the API
   const getAllBooks = async () => {
     try {
@@ -32,41 +35,42 @@ const Books = () => {
     return <div>Error fetching books: {error.message}</div>;
   }
 
-  const filteredBooks = availableBooks.filter(
-    (book) =>
-      book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // moved these functionalities to Navigations component
+  // const filteredBooks = availableBooks.filter(
+  //   (book) =>
+  //     book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     book.author.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   return (
     <>
-      <input
+      {/* <input
         type="text"
         id="searchBar"
         placeholder="search book title or author"
         value={searchTerm}
         onChange={handleSearchChange}
-      />
-<div className="books-container">
-        {filteredBooks.length > 0 ? (
-            filteredBooks.map((book) => (
-              <div
-                key={book.id}
-                className="books-item"
-                onClick={() => {
-                  navigate(`/${book.id}`);
-                }}
-              >
-                {book.coverimage && (
-                  <img src={book.coverimage} alt={`${book.title} cover`} />
-                )}
-                <span className="book-title">{book.title}</span>
-                <span className="book-author">{book.author}</span>
-              </div>
-            ))
-          ) : (
-            <p>No books found</p>
-          )}
+      /> */}
+      <div className="books-container">
+        {availableBooks.length > 0 ? (
+          availableBooks.map((book) => (
+            <div
+              key={book.id}
+              className="books-item"
+              onClick={() => {
+                navigate(`/${book.id}`);
+              }}
+            >
+              {book.coverimage && (
+                <img src={book.coverimage} alt={`${book.title} cover`} />
+              )}
+              <span className="book-title">{book.title}</span>
+              <span className="book-author">{book.author}</span>
+            </div>
+          ))
+        ) : (
+          <p>No books found</p>
+        )}
       </div>
     </>
   );
