@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchAllBooks } from "../api"; // Import fetch all books API function
 import "../css/Books.css";
 
-const Books = () => {
+const Books = ({ filteredBooks }) => {
   // moved to Navigations component
   // const [searchTerm, setSearchTerm] = useState("");
 
@@ -41,6 +41,33 @@ const Books = () => {
   //     book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
   //     book.author.toLowerCase().includes(searchTerm.toLowerCase())
   // );
+
+  // when i have fetched results I want that to be passed to parent component
+  // if there are any filtered books it will be passed to
+
+  if (filteredBooks.length > 0) {
+    return (
+      <div className="books-container">
+        {filteredBooks.map((book) => {
+          return (
+            <div
+              key={book.id}
+              className="books-item"
+              onClick={() => {
+                navigate(`/${book.id}`);
+              }}
+            >
+              {book.coverimage && (
+                <img src={book.coverimage} alt={`${book.title} cover`} />
+              )}
+              <span className="book-title">{book.title}</span>
+              <span className="book-author">{book.author}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <>

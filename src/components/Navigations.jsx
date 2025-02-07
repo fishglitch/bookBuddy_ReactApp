@@ -3,13 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { fetchUserDetails, fetchAllBooks } from "../api";
 import "../css/Navigations.css";
 
-const Navigation = ({ token, setToken }) => {
+const Navigation = ({ token, setToken, setFilteredBooks }) => {
   const [userLogin, setUserLogin] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   // moved from Books component
   const [availableBooks, setAvailableBooks] = useState([]);
+
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
@@ -51,12 +52,16 @@ const Navigation = ({ token, setToken }) => {
     navigate("/");
   };
 
-  // moved from Books component
-  const filteredBooks = availableBooks.filter(
-    (book) =>
-      book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      book.author.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // setFilteredBooks(filteredBooks);
+
+  useEffect(() => {
+    const filteredBooks = availableBooks.filter(
+      (book) =>
+        book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setFilteredBooks(filteredBooks);
+  }, [searchTerm]);
 
   return (
     <nav className="navigation">
@@ -87,7 +92,7 @@ const Navigation = ({ token, setToken }) => {
         )}
       </div>
 
-      <div className="search-results">
+      {/* <div className="search-results">
         {searchTerm && filteredBooks.length > 0 ? (
           filteredBooks.map((book) => (
             <div
@@ -107,7 +112,7 @@ const Navigation = ({ token, setToken }) => {
         ) : (
           <p>No books found</p>
         )}
-      </div>
+      </div> */}
     </nav>
   );
 };
