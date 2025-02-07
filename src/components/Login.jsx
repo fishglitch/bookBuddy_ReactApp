@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const API_URL = `https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/`;
 
-const Login = ({setToken}) => {
+const Login = ({token, setToken, setUser}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -33,7 +33,7 @@ const Login = ({setToken}) => {
 
             // if login is successful, set the token
             setToken(result.token);
-            console.log("Login success:", result.message);
+            // console.log("Login success:", result.message);
 
             navigate("/account");
         } catch (error) {

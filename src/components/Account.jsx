@@ -39,7 +39,7 @@ const Account = () => {
         if (!APIresponse.ok) {
           throw new Error(json.error || "cannot fetch logged in user!!");
         }
-        console.log("fetched user login info:", json);
+        // console.log("fetched user login info:", json);
         setUserLogin(json);
         setBooks(json.books || []);
       } catch (error) {

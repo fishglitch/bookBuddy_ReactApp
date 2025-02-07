@@ -1,70 +1,44 @@
-/* TODO - add your code to create a functional React component 
-that renders a registration form */
-
-// frog@frog.com pw: frog
-
 import { useState } from "react";
-
-const API_URL = `https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/`;
+import { registerUser } from "../api"; // Import API function
+import { useNavigate } from "react-router-dom";
 
 const Register = ({ setToken }) => {
-
-  // this is the body from POST api/users/register
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [email, setEmail] =useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  async function handleRegistration(event) {
+  const handleRegistration = async (event) => {
     event.preventDefault();
-    // console.log(firstName);
 
     try {
-      const APIresponse = await fetch(`${API_URL}/users/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            firstName: firstName,
-            lastName: lastName,
-            email,
-            password,// need to review this portion
-          }),
-        });
-
-      const result = await APIresponse.json();
-      // console.log("API Response", APIresponse);
-      // console.log("parsed result", result);
-
-      if (!APIresponse.ok) {
-        throw new Error(result.message || "registration failed");
-      }
-
-      // if successful, set token and redirect
+      const result = await registerUser({
+        firstName,
+        lastName,
+        email,
+        password,
+      }); // Use API function
       setToken(result.token);
-
       localStorage.setItem("token", result.token);
-      // console.log("Registration successful:", result.message);
-      
-      
+
+      navigate("/login");
     } catch (error) {
       setError(error.message);
     }
-  }
+  };
+
   return (
     <>
       <div className="registration-form">
         <h2>Sign Up!</h2>
-        <form onSubmit={handleRegistration} >
+        <form onSubmit={handleRegistration}>
           <div>
             <label>
               First Name:
               <input
-              type="text"
+                type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
@@ -102,13 +76,14 @@ const Register = ({ setToken }) => {
               />
             </label>
           </div>
-          <button className="submit-button" type="submit">Submit</button>
+          <button className="submit-button" type="submit">
+            Submit
+          </button>
         </form>
-        
         {error && <p style={{ color: "red" }}>{error}</p>}
       </div>
     </>
-    // react fragment, an invisible div (parent)
   );
-}
-export default Register
+};
+
+export default Register;

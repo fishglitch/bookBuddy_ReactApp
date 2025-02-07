@@ -25,7 +25,7 @@ const SingleBook = () => {
         if (!APIresponse.ok) {
           throw new Error(json.error || "cannot fetch single book");
         }
-        console.log(json);
+        // console.log(json);
         setSingleBook(json.book);
       } catch (error) {
         console.error("Can't show single book", error);
