@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
-import "../css/Navigations.css";
-import { fetchUserDetails } from "../api";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { fetchUserDetails } from "../api";
+import "../css/Navigations.css";
 
 const Navigation = ({ token, setToken }) => {
   const [userLogin, setUserLogin] = useState(null);
@@ -34,8 +34,6 @@ const Navigation = ({ token, setToken }) => {
   };
   return (
     <nav className="navigation">
-      {" "}
-      {/* dont forget CSS*/}
       <div>
         <Link to="/">Home</Link>
         <Link to="/register">Register for an Account</Link>
@@ -46,7 +44,7 @@ const Navigation = ({ token, setToken }) => {
         otherwise, show a link to the 'Login' page. */}
         {userLogin ? ( // userLogin state to conditionally render
           <>
-            <Link to="/account">Account </Link>
+            <Link to="/account">Account</Link>
             <button onClick={handleLogout}>Logout: [{userLogin?.email}]</button>
           </>
         ) : (

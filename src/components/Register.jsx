@@ -39,6 +39,7 @@ const Register = ({ setToken }) => {
               First Name:
               <input
                 type="text"
+                id="firstName"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
               />
@@ -49,6 +50,7 @@ const Register = ({ setToken }) => {
               Last name:
               <input
                 type="text"
+                id="lastName"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
               />
@@ -59,6 +61,7 @@ const Register = ({ setToken }) => {
               Email:
               <input
                 type="email"
+                id="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -70,6 +73,7 @@ const Register = ({ setToken }) => {
               Password:
               <input
                 type="password"
+                id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required

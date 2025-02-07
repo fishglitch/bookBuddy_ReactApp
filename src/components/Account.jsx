@@ -5,7 +5,6 @@ import { fetchUserDetails, deleteReservation } from "../api"; // Import fetch us
 
 const Account = () => {
   const [userLogin, setUserLogin] = useState(null);
-  // const [books, setBooks] = useState([]); 
   const [reservations, setReservations] = useState([]); 
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);

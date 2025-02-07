@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { fetchAllBooks } from "../api"; // Import fetch all books API function
 import "../css/Books.css";
 
-const Books = ({ books }) => {
+const Books = () => {
   const [availableBooks, setAvailableBooks] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const handleSearchChange = (event) => {
+  const handleSearchChange = (event) => { 
     setSearchTerm(event.target.value);
   };
 
@@ -42,6 +42,7 @@ const Books = ({ books }) => {
     <>
       <input
         type="text"
+        id="searchBar"
         placeholder="search book title or author"
         value={searchTerm}
         onChange={handleSearchChange}
