@@ -41,7 +41,7 @@ const Books = ({ filteredBooks }) => {
               key={book.id}
               className="books-item"
               onClick={() => {
-                navigate(`/${book.id}`);
+                navigate(`/books/${book.id}`);
               }}
             >
               {book.coverimage && (
@@ -66,7 +66,7 @@ const Books = ({ filteredBooks }) => {
               key={book.id}
               className="books-item"
               onClick={() => {
-                navigate(`/${book.id}`);
+                navigate(`/books/${book.id}`);
               }}
             >
               {book.coverimage && (

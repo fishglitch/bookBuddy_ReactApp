@@ -13,7 +13,7 @@ import Account from "./components/Account";
 
 function App( {}) {
 const [filteredBooks, setFilteredBooks] = useState([]);
-console.log("filtered books", filteredBooks);
+
 
   const [token, setToken] =useState(null);
 
@@ -46,7 +46,7 @@ console.log("filtered books", filteredBooks);
           <Route path="/" element={<Books filteredBooks={filteredBooks}/>} />
           <Route path="/login" element={<Login token={token} setToken={setToken}/>} />
           <Route path="/register" element={<Register token={token} setToken={setToken}/>} />
-          <Route path="/:id" element={<SingleBook />} />
+          <Route path="/books/:id" element={<SingleBook />} />
           <Route path="/account" element={<Account />} />
         </Routes>
       </div>
