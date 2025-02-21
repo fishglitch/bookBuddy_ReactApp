@@ -9,8 +9,13 @@ Details on the API can be found 🔗 [here](https://fsa-book-buddy-b6e748d1380d.
 
 2/20/25 updated the following:
 
-Project board for bookbuddy: https://github.com/users/fishglitch/projects/3/views/3
-removed console.logs
-updated /:id to books/:id
-added try/catch blocks in api.js
-will not be able to submit on time for review, but self note: will configure search functionality so that the bar does not show up on other path views, if pressed "enter", the search results come up onto another route.
+- Project board for bookbuddy: https://github.com/users/fishglitch/projects/3/views/3
+- removed console.logs
+- updated /:id to books/:id
+- added try/catch blocks in api.js
+- will not be able to submit on time for review, but self note: will configure search functionality so that the bar does not show up on other path views, if pressed "enter", the search results come up onto another route.
+
+- created a .gitignore file and removed node modules folder remotely
+git rm -r --cached node_modules
+git commit -m "Removed node_modules from tracking"
+git check-ignore -v node_modules/
