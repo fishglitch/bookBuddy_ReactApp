@@ -1,12 +1,21 @@
 /* SingleBook.css */
 
+
 .single-book-container {
     display: flex; /* Use Flexbox for horizontal layout */
     align-items: flex-start; /* Align items at the start of the container */
     justify-content: center; /* Center the container's items horizontally */
     height: 100vh; /* Full viewport height */
     padding: 0 20%; /* Top and bottom padding is 0, left and right padding is 20% */
-    background-color: #f0f0f0; /* Light background color */
+    background: linear-gradient(90deg, 
+    #ffb3b3,   /* Muted Pastel Red */
+    #ffdbb3,   /* Muted Pastel Orange */
+    #ffffb3,   /* Muted Pastel Yellow */
+    #b3ffb3,   /* Muted Pastel Green */
+    #b3ffff,   /* Muted Pastel Cyan */
+    #b3b3ff,   /* Muted Pastel Blue */
+    #d7b3ff    /* Muted Pastel Violet */
+    );
 }
 
 .book-details {

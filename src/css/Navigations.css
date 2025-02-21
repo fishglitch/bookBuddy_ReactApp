@@ -1,34 +1,64 @@
 /* Navigations.css */
 
 nav {
-    background-color: #08245c;
-    padding: 1rem; /* Padding around the nav */
-  }
+  background: linear-gradient(90deg, 
+  #d7b3ff,   /* Muted Pastel Violet */
+  #b3b3ff,   /* Muted Pastel Blue */
+  #b3ffff,   /* Muted Pastel Cyan */
+  #b3ffb3,   /* Muted Pastel Green */
+  #ffffb3,   /* Muted Pastel Yellow */
+  #ffdbb3,   /* Muted Pastel Orange */
+  #ffb3b3    /* Muted Pastel Red */
+  
+  );
+  padding: 1rem; /* Padding around the nav */
+  border-radius: 10%; /* Rounded corners for the nav bar */
+}
   
   .navigation {
     display: flex; /* Use flexbox for spacing */
-    justify-content: space-between; /* Space out links evenly */
+    justify-content: space-around; /* Space out links evenly */
     align-items: center; /* Center align items vertically */
+    
   }
   
   .navigation h1 {
-    color: white; /* Change the header text color to white */
+    color: rgb(166, 164, 191); /* Change the header text color */
     margin: 0; /* Remove default margin */
   }
   
   .navigation div {
     display: flex; /* links container */
-    gap: 15px; /* space between links */
+    
+    gap: 30px; /* space between links */
+    
   }
   
   .navigation a {
-    color: white; /* links */
+    color: rgb(111, 17, 17); /* links */
     text-decoration: none; /* remove underline from links */
     padding: 0.5rem 1rem;
     border-radius: 5px; 
     transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+
   }
   
   .navigation a:hover {
-    background-color: #61dafb; /* background on hover */
+    background-color: #ebef0b; /* background on hover */
   }
+
+  /* Media query for screen resizing */
+@media (max-width: 768px) {
+  .navigation {
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items to start (left) */
+    gap: 10px; /* Reduce space between items when stacked */
+  }
+
+  /* Make sure the heading is also centered */
+  .header-container {
+      display: flex; 
+      flex-direction: column; /* Stack logo and h1 vertically */
+      align-items: center; /* Center items */
+  }
+}

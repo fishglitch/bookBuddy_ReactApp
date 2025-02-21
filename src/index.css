@@ -1,12 +1,50 @@
 body {
-  font-family: Georgia, serif;
-  background-color: #f8f8f8;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  background: linear-gradient(90deg, 
+  #ffb3b3,   /* Muted Pastel Red */
+  #ffdbb3,   /* Muted Pastel Orange */
+  #ffffb3,   /* Muted Pastel Yellow */
+  #b3ffb3,   /* Muted Pastel Green */
+  #b3ffff,   /* Muted Pastel Cyan */
+  #b3b3ff,   /* Muted Pastel Blue */
+  #d7b3ff    /* Muted Pastel Violet */
+  );
   margin: 0;
   padding: 0;
 }
 
+.header-container {
+  font-family: Impact, sans-serif; /* Font for the header */
+  text-align: center; /* Center text within the container */
+  font-size: 26px; 
+  display: flex; /* Enable Flexbox */
+  align-items: center; /* Center items vertically */
+  justify-content: center; /* Center items horizontally */
+  letter-spacing: 8px; /* Adjust the spacing between letters */
+  margin: 0 auto; /* Center the container itself, if needed */
+}
+
+
+.header-container h1 {
+  display: inline-block; /* Prevent the skew from affecting layout */
+  transform: skewX(-9deg); /* Slightly slant the text */
+}
+
+.slanted1 {
+  display: inline-block; /* Ensure the skew effect works properly */
+  transform: skewX(25deg); /* Adjust this value for the desired slant */
+}
+
+
+.slanted3 {
+  display: inline-block; /* Ensure the skew effect works properly */
+  transform: skewX(-15deg); /* Adjust this value for the desired slant */
+}
+
+
 #logo-image {
-  width: 30px;
+  width: 10vw; /* 10% of the viewport width */
+  height: auto;
   margin-right: 10px;
 }
 
