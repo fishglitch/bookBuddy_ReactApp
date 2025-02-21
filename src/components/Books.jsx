@@ -4,19 +4,13 @@ import { fetchAllBooks } from "../api"; // Import fetch all books API function
 import "../css/Books.css";
 
 const Books = ({ filteredBooks }) => {
-  // moved to Navigations component
-  // const [searchTerm, setSearchTerm] = useState("");
+
 
   const [availableBooks, setAvailableBooks] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // const handleSearchChange = (event) => {
-  //   setSearchTerm(event.target.value);
-  // };
 
-  // moved these functionalities to Navigations component
-  // fetch all books from the API
   const getAllBooks = async () => {
     try {
       const books = await fetchAllBooks(); // Use API function
@@ -34,13 +28,6 @@ const Books = ({ filteredBooks }) => {
   if (error) {
     return <div>Error fetching books: {error.message}</div>;
   }
-
-  // moved these functionalities to Navigations component
-  // const filteredBooks = availableBooks.filter(
-  //   (book) =>
-  //     book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //     book.author.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
 
   // when i have fetched results I want that to be passed to parent component
   // if there are any filtered books it will be passed to
@@ -71,13 +58,7 @@ const Books = ({ filteredBooks }) => {
 
   return (
     <>
-      {/* <input
-        type="text"
-        id="searchBar"
-        placeholder="search book title or author"
-        value={searchTerm}
-        onChange={handleSearchChange}
-      /> */}
+
       <div className="books-container">
         {availableBooks.length > 0 ? (
           availableBooks.map((book) => (

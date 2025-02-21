@@ -52,8 +52,6 @@ const Navigation = ({ token, setToken, setFilteredBooks }) => {
     navigate("/");
   };
 
-  // setFilteredBooks(filteredBooks);
-
   useEffect(() => {
     const filteredBooks = availableBooks.filter(
       (book) =>
@@ -91,28 +89,6 @@ const Navigation = ({ token, setToken, setFilteredBooks }) => {
           </>
         )}
       </div>
-
-      {/* <div className="search-results">
-        {searchTerm && filteredBooks.length > 0 ? (
-          filteredBooks.map((book) => (
-            <div
-              key={book.id}
-              className="books-item"
-              onClick={() => {
-                navigate(`${book.id}`);
-              }}
-            >
-              {book.coverimage && (
-                <img src={book.coverimage} alt={`${book.title} cover`} />
-              )}
-              <span className="book-title">{book.title}</span>
-              <span className="book-author">{book.author}</span>
-            </div>
-          ))
-        ) : (
-          <p>No books found</p>
-        )}
-      </div> */}
     </nav>
   );
 };

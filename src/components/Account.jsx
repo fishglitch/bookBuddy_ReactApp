@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { fetchUserDetails, deleteReservation } from "../api"; // Import fetch user details and update function
+import { fetchUserDetails, deleteReservation } from "../api"; 
 
 
 const Account = () => {
@@ -22,7 +22,7 @@ const Account = () => {
         const userDetails = await fetchUserDetails(token);
         setUserLogin(userDetails);
         setReservations(userDetails.books || []);
-        console.log("Books you've checked out:", userDetails.books);
+
       } catch (error) {
         console.error("Can't fetch logged in user!", error);
         setError(error);
@@ -35,7 +35,7 @@ const Account = () => {
   }, [navigate]);
 
   if (loading) {
-    return <div>Loading...</div>; // Display loading
+    return <div>Loading...</div>; 
   }
 
   if (error) {
@@ -61,15 +61,14 @@ const Account = () => {
   const handleReturnBook = async (reservationId) => {
     const token = localStorage.getItem("token");
     if (!token) return; // If no token, do not proceed
-    console.log("Currently checked out books:", reservations ); 
-    console.log(`Attempting to return book with ID: ${reservationId}`);
+
     try {
       const result = await deleteReservation(reservationId, token);
       // Update local state to reflect change
       setReservations((prevResevations) => 
         prevResevations.filter((reservation) => reservation.id !== reservationId) // Remove returned book from list
       );
-      console.log(`Success! Book with ID: ${reservationId} has been returned!`);
+
     } catch (error) {
       console.error("Can't return the book!", error);
       setError(error);

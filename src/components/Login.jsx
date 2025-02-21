@@ -15,15 +15,12 @@ const Login = ({ token, setToken, setUser }) => {
         event.preventDefault();
 
         try {
-            const result = await loginUser(email, password); // Use API function
+            const result = await loginUser(email, password);
             // Save token to local storage
             localStorage.setItem("token", result.token);
 
             // If login is successful, set the token and user
             setToken(result.token);
-
-            // Option: fetch user details if needed (use fetchUserDetails here if so)
-            // setUser(userDetails); // can define userDetails after fetching
 
             navigate("/account");
         } catch (error) {
